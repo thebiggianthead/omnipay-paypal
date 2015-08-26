@@ -20,6 +20,11 @@ class ExpressFetchCheckoutRequest extends AbstractRequest
         } else {
             $data['TOKEN'] = $this->httpRequest->query->get('token');
         }
+        
+        $url = $this->getEndpoint() . "?USER={$data['USER']}&PWD={$data['PWD']}&SIGNATURE={$data['SIGNATURE']}&METHOD=$data[METHOD]&VERSION={$data['VERSION']}&TOKEN={$data['TOKEN']}";
+        parse_str(file_get_contents($url), $output);
+        
+        $data = array_merge($data, $output);
 
         return $data;
     }
